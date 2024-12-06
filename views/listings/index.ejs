@@ -1,0 +1,270 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+  #filters{
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+  }
+  .filter{
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 1rem;
+    opacity: 0.7;
+  }
+  .filter:hover{
+    opacity: 1;
+    cursor: pointer;
+  }
+  .filter p{
+    font-size: 0.8rem;
+  }
+  .tax-info{
+    display: none;  
+  }
+  .tax-toggle{
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3.5rem;
+    padding: 1rem;
+    margin-left: auto;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .map-section{
+    display: flex;
+    justify-content: space-between; /* Optional: to give space between the map and explore section */
+    align-items: center; /* Vertically align items */
+    padding: 20px;
+  }
+  #map {
+    width: 70%; /* Adjust width as needed */
+    height: 530px; /* Set a height for the map */
+    background-color: #e0e0e0; /* Temporary background for the map (replace with actual map integration) */
+    margin-right: 10rem;
+    border: none;
+    border-radius: 4%;
+  }
+  
+  .explore {
+    width: 65%; /* Adjust the width to fit your content */
+    padding: 20px;
+    text-align: left; /* Align text to the left */
+    margin-right: 2rem;    
+    margin-left: 2rem;
+    margin-top: 1rem;
+  }
+  
+  .explore h1 {
+    font-size: 4.5rem;
+    margin-bottom: 10px;
+    margin-left: 5rem;
+    color: red;
+  }
+  
+  .explore h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  
+  .explore p {
+    font-size: 1.5rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    .map-section {
+      flex-direction: column; /* Stack the map and explore div on smaller screens */
+    }
+  
+    #map, .explore {
+      width: 100%; /* Full width for both elements */
+      margin-bottom: 20px; /* Add some space between the sections */
+    }
+  
+    .explore h1 {
+      font-size: 2rem; /* Adjust the font size for smaller screens */
+    }
+  }
+    .typing {
+      display: inline-block;
+      font-size: 1.5rem;
+      color: #333;
+      border-right: 3px solid #333; /* Cursor effect */
+      padding-right: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 3s steps(30) 1s forwards, blink 0.75s step-end infinite;
+    }
+    
+    @keyframes typing {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+    
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+    
+    .explore p {
+      font-size: 1.3rem;
+    }
+    
+    
+    
+  
+
+</style>
+
+<body>
+  
+    
+    <div id="filters">
+      <div class="filter">
+        <div><i class="fa-solid fa-fire"></i></div> 
+        <p>Trending</p>
+      </div>
+
+      <div class="filter">
+        <i class="fa-solid fa-bed"></i> 
+        <p>Rooms</p>
+      </div>
+
+
+        <div class="filter">
+          <div><i class="fa-solid fa-city"></i></div> 
+          <p>Iconic Cities</p>
+        </div>
+  
+        <div class="filter">
+          <div><i class="fa-solid fa-mountain-sun"></i></div> 
+          <p>Hill Station</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-solid fa-tents"></i></div> 
+          <p>Camping</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-solid fa-tractor"></i></div> 
+          <p>Farms</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-solid fa-landmark"></i></div> 
+          <p>Castles</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-regular fa-snowflake"></i></div> 
+          <p>Arctic</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-solid fa-person-swimming"></i></div> 
+          <p>Amazing Pools</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-regular fa-snowflake"></i></div> 
+          <p>Arctic</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-solid fa-person-swimming"></i></div> 
+          <p>Amazing Pools</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-regular fa-snowflake"></i></div> 
+          <p>Arctic</p>
+        </div>
+
+      
+
+        <div class="tax-toggle">
+          <div class="form-check-reverse form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+          </div>
+        </div>
+        
+
+    </div>
+    <div class="map-section">
+      <div id="map">
+
+      </div>
+      <div class="explore">
+       
+        <h1>CozyNestle.</h1>
+        <h3 class="typing">Your Personalized travel experience... </h3>
+        <p>Explore Near you!</p>
+    
+      </div>
+    </div>
+
+    
+
+    <br><br>
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-2">
+    <% for(let listing of alListings){ %>
+      <a href="/listings/<%= listing._id  %>" class="listing-link">
+        <div class="card col listing-card" style="width: 20rem;">
+           
+          <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
+          <div class="card-img-overlay"></div>
+          <div class="card-body">
+          <p class="card-text">
+             <b> <%=  listing.title %> </b> <br>
+               &#8377; <%= listing.price %> / night
+               <i class="tax-info">&nbsp; +18% GST</i>
+          </p>
+          </div>
+      </div>
+      </a>
+
+      <% } %>
+  </div>
+   
+</body>
+
+
+<script>
+  let taxSwitch = document.getElementById("flexSwitchCheckDefault")
+  taxSwitch.addEventListener("click", ()=>{
+    let taxInfo = document.getElementsByClassName("tax-info")
+    for(info of taxInfo){
+      if(info.style.display != "inline"){
+        info.style.display = "inline";
+      }
+      else{
+        info.style.display = "none";
+      }
+    }
+  })
+
+	mapboxgl.accessToken = 'pk.eyJ1IjoiZGl2eWFuc2hpdmF0cyIsImEiOiJjbTNmaWNvYmwwNHp1MmlzY2Vlb2k3MWN2In0.mhXDgUytW1X2U1smbn9T0A';
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/dark-v11',
+        center: [77.2088,28.6139], // starting position [lng, lat]. Note that lat must be set between -90 and 90
+        zoom: 10// starting zoom
+    });
+
+   
+
+   const marker1 = new mapboxgl.Marker({color: "Red"})
+   .setLngLat([77.2088,28.6139])
+   .addTo(map);
+
+</script>
